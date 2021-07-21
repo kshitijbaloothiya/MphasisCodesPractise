@@ -65,7 +65,7 @@ public class Prob4 {
                 .sorted(Employee::compareTo)
                 .collect(Collectors.toList());
 
-        System.out.println("Employees sorted on basis of age:");
+        System.out.println("Employees sorted on basis of name:");
         employeesList.forEach(System.out::println);
 
 
