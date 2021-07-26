@@ -1,16 +1,9 @@
 package com.mphasis.cui;
 
-import java.awt.List;
-import java.util.Dictionary;
-import java.util.HashMap;
-import java.util.LinkedList;
+import java.util.*;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Collection;
-import java.util.Map;
-import java.util.PriorityQueue;
-import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.*;
 import java.util.logging.Level;
@@ -33,6 +26,7 @@ public class Exchange {
 
     private ConcurrentMap<Double, PriorityQueue<Order>> orderbook;
 
+
     public static void main(String args[]) throws IOException{
 
         //Read port from stdinput
@@ -40,6 +34,7 @@ public class Exchange {
         //  call runServer
         int port = Integer.parseInt(args[0]);
         Exchange OurExchange = new Exchange();
+
 
         OurExchange.runServer(port);
 
@@ -49,7 +44,6 @@ public class Exchange {
         // constructor for our main exchange
         orderbook = new ConcurrentHashMap<Double, PriorityQueue<Order>>();
         clientFeeds = new ConcurrentHashMap<String, Connection>();
-
 
     }
     public void runServer(int port) throws IOException{
@@ -94,6 +88,7 @@ public class Exchange {
             if( orderbook.containsKey(orderToAdd.price))
             {
                 System.out.println("Order book contains orders at that level, adding our new order..");
+
                 orderbook.get(orderToAdd.price).add(orderToAdd);
 
                 //Send a fill message to the correct client

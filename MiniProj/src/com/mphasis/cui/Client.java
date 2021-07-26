@@ -8,6 +8,7 @@ import java.io.BufferedWriter;
 import java.io.Console;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Client {
@@ -53,7 +54,7 @@ public class Client {
         switch(connectionType){
 
             case "FEED":
-                System.out.println("Starting feed method call...");
+                logger.log(Level.INFO,"Starting feed method call...");
                 startFeed(clientID, port);
                 //	new Thread(	new ClientGatewayReader()).start();
 
@@ -71,7 +72,7 @@ public class Client {
                 break;
 
             default:
-                System.out.println("Could not read connection type. Exiting...");
+                logger.log(Level.INFO,"Could not read connection type. Exiting...");
 
         }
 
@@ -90,7 +91,7 @@ public class Client {
 
         // send initial message to server to identify connection type.  array[clientID, Type]
         String initExec = clientID + "|" +  "EXEC";
-        System.out.println("Sending client Id and exec feed to exchange...");
+        logger.log(Level.INFO,"Sending client Id and exec feed to exchange...");
 
         output.println(initExec);
 
@@ -115,12 +116,12 @@ public class Client {
                     System.out.println("Order Entry:  [BUY/SELL] | [quantity] | [price]");
                     String order = c.readLine();
                     String[] orderArray = order.split("\\|");
-                    System.out.println("Making Order, field1: " + orderArray[0]);
-                    System.out.println("Making Order, field2: " + orderArray[1]);
-                    System.out.println("Making Order, field3: " + orderArray[2]);
+                    logger.log(Level.INFO,"Making Order, field1: " + orderArray[0]);
+                    logger.log(Level.INFO,"Making Order, field2: " + orderArray[1]);
+                    logger.log(Level.INFO,"Making Order, field3: " + orderArray[2]);
 
 
-                    System.out.println("Sending order...");
+                    logger.log(Level.INFO,"Sending order...");
                     output.println(clientID + "|" + "NewOrder" + "|" + orderArray[0] + "|" + orderArray[1] + "|" + orderArray[2]);
 
 
@@ -129,7 +130,7 @@ public class Client {
                 case 2:
                     //cancel order
                     String cancelID = c.readLine("Enter Order ID to Cancel");
-                    System.out.println("Sending Cancellation to exchange...");
+                    logger.log(Level.INFO,"Sending Cancellation to exchange...");
 
                     output.println(clientID + "|" + "CancelOrder" + "|" + cancelID );
 
@@ -137,7 +138,7 @@ public class Client {
 
                 case 3:
                     //request market data
-                    System.out.println("Requesting market data...");
+                    logger.log(Level.INFO,"Requesting market data...");
                     output.println(clientID + "|" + "MarketData");
 
 
@@ -148,11 +149,11 @@ public class Client {
                     break;
 
                 default:
-                    System.out.println("Not a valid option");
+                    logger.log(Level.INFO,"Not a valid option");
                     break;
 
             }
-            System.out.println("Client exiting...");
+            logger.log(Level.INFO,"Client exiting...");
 
 
         }
@@ -160,11 +161,11 @@ public class Client {
 
     }
     public static void printMenu(){
-        System.out.println("You are connected to the exchange as an EXEC Feed:");
-        System.out.println("1 : Create Order" );
-        System.out.println("2 : Cancel Order" );
-        System.out.println("3 : Request Market Data");
-        System.out.println("4 : Quit");
+        logger.log(Level.INFO,"You are connected to the exchange as an EXEC Feed:");
+        logger.log(Level.INFO,"1 : Create Order" );
+        logger.log(Level.INFO,"2 : Cancel Order" );
+        logger.log(Level.INFO,"3 : Request Market Data");
+        logger.log(Level.INFO,"4 : Quit");
 
 
     }
@@ -178,17 +179,17 @@ public class Client {
 
         // send initial message to server to identify connection type.  array[clientID, Type]
         String initExec = clientID + "|" +  "FEED";
-        System.out.println("Sending ID and feed request to server " + clientID );
+        logger.log(Level.INFO,"Sending ID and feed request to server " + clientID );
         output.println(initExec);
 
         boolean isRunning = true;
 
         while(isRunning)
         {
-            System.out.println("Feed is ready! Waiting for lines from exchange....");
+            logger.log(Level.INFO,"Feed is ready! Waiting for lines from exchange....");
             String feed = input.readLine();
-            System.out.println("Message from gateway received!");
-            System.out.println(feed);
+            logger.log(Level.INFO,"Message from gateway received!");
+            logger.log(Level.INFO,feed);
         }
 
     }
