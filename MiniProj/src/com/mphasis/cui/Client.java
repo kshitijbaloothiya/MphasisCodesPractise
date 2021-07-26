@@ -116,6 +116,7 @@ public class Client {
                     System.out.println("Order Entry:  [BUY/SELL] | [quantity] | [price]");
                     String order = c.readLine();
                     String[] orderArray = order.split("\\|");
+
                     logger.log(Level.INFO,"Making Order, field1: " + orderArray[0]);
                     logger.log(Level.INFO,"Making Order, field2: " + orderArray[1]);
                     logger.log(Level.INFO,"Making Order, field3: " + orderArray[2]);

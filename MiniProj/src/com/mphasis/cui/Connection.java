@@ -118,6 +118,7 @@ public class Connection implements Runnable {
                 while( ( input = in.readLine()) != null)
                 {
                     String[] messageArray = input.split("\\|", 5);
+
                     logger.log(Level.INFO,"Message received from the client: " + input);
 
                     //now we process the message and send commands to exchange accordingly
