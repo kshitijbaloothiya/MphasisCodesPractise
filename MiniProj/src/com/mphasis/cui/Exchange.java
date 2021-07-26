@@ -100,6 +100,7 @@ public class Exchange {
                 System.out.println("Order book has no orders at that price level, creating price level now...");
                 PriorityQueue<Order> newprice = new PriorityQueue<Order>();
                 newprice.add(orderToAdd);
+
                 orderbook.putIfAbsent(orderToAdd.price, newprice );
                 logger.log(Level.INFO,"Order has been added!");
                 clientFeeds.get(orderToAdd.clientID).addMessage("Order has been added to the book, ID: "+ orderToAdd.orderID.toString());
@@ -138,7 +139,7 @@ public class Exchange {
 
 
             catch (Exception e)
-            { System.out.println("Exception in instant fill " + e.toString());
+            { logger.log(Level.INFO,"Exception in instant fill " + e.toString());
 
 
             }
@@ -173,7 +174,7 @@ public class Exchange {
 
             if (currentBestFill.isRealOrder)
             {
-                System.out.println("Current Best Fill found in instant fill...");
+                logger.log(Level.INFO,"Current Best Fill found in instant fill...");
                 orderbook.get(currentBestFill.price).remove(currentBestFill);  // this may be buggy
 
                 //priceLevel.getValue().remove(individualOrder);// remove the order.
@@ -216,12 +217,12 @@ public class Exchange {
 
             for (Order individualOrder : priceLevel.getValue())
             {
-                System.out.println("COmparing order id " + individualOrder.orderID.toString() + " to order id " + orderID);
+                logger.log(Level.INFO,"COmparing order id " + individualOrder.orderID.toString() + " to order id " + orderID);
 
                 if( individualOrder.orderID.toString().equals(orderID) )
                 {
                     //remove that order!
-                    System.out.println("Removing order # " + orderID);
+                    logger.log(Level.INFO,"Removing order # " + orderID);
                     priceLevel.getValue().remove(individualOrder);
 
 
@@ -240,7 +241,7 @@ public class Exchange {
     {
         //giant string builder   print statement that is all (top) orders in the queue.
 
-        System.out.println("Sending Market Data...");
+        logger.log(Level.INFO,"Sending Market Data...");
 
         StringBuilder book = new StringBuilder();
 
@@ -261,13 +262,13 @@ public class Exchange {
 
             //book.append(str)
         }
-        System.out.println("Market Data assembled! " + book.toString());
+        logger.log(Level.INFO,"Market Data assembled! " + book.toString());
 
 
         //send book to the client that requested it
         if(this.clientFeeds.containsKey(clientID))
         {
-            System.out.println("Client Feeds contains the key!");
+            logger.log(Level.INFO,"Client Feeds contains the key!");
             Connection ethan = this.clientFeeds.get(clientID);
             //System.out.println(ethan.toString());
             //System.out.println("book to string not working? " + book.toString());
@@ -279,7 +280,7 @@ public class Exchange {
 
         }
         else
-            System.out.println("Could not find a FEEd connection to send market data too..");
+            logger.log(Level.INFO,"Could not find a FEEd connection to send market data too..");
 
     }
 
@@ -287,7 +288,7 @@ public class Exchange {
     public boolean registerClientFeed(String clientID, Connection connObject)
     {
         //this method needs to put clients in an exchange dictionary <clientID, connObject>
-        System.out.println("Putting clientID " + clientID + "Into client feeds object");
+        logger.log(Level.INFO,"Putting clientID " + clientID + "Into client feeds object");
         this.clientFeeds.put(clientID,  connObject);
 
         return false;
