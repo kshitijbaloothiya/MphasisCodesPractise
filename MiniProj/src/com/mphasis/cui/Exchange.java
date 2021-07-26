@@ -87,7 +87,7 @@ public class Exchange {
 
             if( orderbook.containsKey(orderToAdd.price))
             {
-                System.out.println("Order book contains orders at that level, adding our new order..");
+                logger.log(Level.INFO,"Order book contains orders at that level, adding our new order..");
 
                 orderbook.get(orderToAdd.price).add(orderToAdd);
 
@@ -100,6 +100,8 @@ public class Exchange {
                 logger.log(Level.INFO,"Order book has no orders at that price level, creating price level now...");
                 PriorityQueue<Order> newprice = new PriorityQueue<Order>();
                 newprice.add(orderToAdd);
+
+
 
                 orderbook.putIfAbsent(orderToAdd.price, newprice );
                 logger.log(Level.INFO,"Order has been added!");
@@ -185,7 +187,7 @@ public class Exchange {
         } // end iff
 
 
-        System.out.println("No Instant Fill Made, returning false...");
+        logger.log(Level.INFO,"No Instant Fill Made, returning false...");
         //
         return false;
 
@@ -244,6 +246,7 @@ public class Exchange {
         logger.log(Level.INFO,"Sending Market Data...");
 
         StringBuilder book = new StringBuilder();
+
 
 
         // loop to build the book string
