@@ -97,7 +97,7 @@ public class Exchange {
             }
             else
             {
-                System.out.println("Order book has no orders at that price level, creating price level now...");
+                logger.log(Level.INFO,"Order book has no orders at that price level, creating price level now...");
                 PriorityQueue<Order> newprice = new PriorityQueue<Order>();
                 newprice.add(orderToAdd);
 
@@ -122,7 +122,7 @@ public class Exchange {
 
             try
             {
-                for ( ConcurrentMap.Entry<Double, PriorityQueue<Order> > priceLevel : orderbook.entrySet())
+                for ( ConcurrentMap.Entry<Double, PriorityQueue<Order>> priceLevel : orderbook.entrySet())
                 {
                     for (Order individualOrder : priceLevel.getValue())
                     {
@@ -194,7 +194,7 @@ public class Exchange {
     public void match(Order orderOne, Order orderTwo)
     {
         // send fill notification to each clientID
-        System.out.println("Match made!");
+        logger.log(Level.INFO,"Match made!");
 
         String fill = "Fill Notification!  Buy Side: " + orderOne.clientID + " Sell Side: " + orderTwo.clientID + " Price: " + String.valueOf(orderTwo.price) + "Quantity: " + String.valueOf(orderTwo.quantity) ;
 
