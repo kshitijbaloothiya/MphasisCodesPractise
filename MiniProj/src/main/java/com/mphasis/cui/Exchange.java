@@ -27,7 +27,7 @@ public class Exchange {
     private ConcurrentMap<Double, PriorityQueue<Order>> orderbook;
 
 
-    public static void main(String args[]) throws IOException{
+    public static void main(String[] args) throws IOException{
 
         //Read port from stdinput
         // Then init one Exchange object.  this will create all the message queues and order structs
@@ -105,7 +105,7 @@ public class Exchange {
 
                 orderbook.putIfAbsent(orderToAdd.price, newprice );
                 logger.log(Level.INFO,"Order has been added!");
-                clientFeeds.get(orderToAdd.clientID).addMessage("Order has been added to the book, ID: "+ orderToAdd.orderID.toString());
+                //clientFeeds.get(orderToAdd.clientID).addMessage("Order has been added to the book, ID: "+ orderToAdd.orderID.toString());
 
 
 
