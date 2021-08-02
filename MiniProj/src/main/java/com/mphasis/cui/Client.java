@@ -44,7 +44,7 @@ public class Client {
 
 
     //Args from client  args[clientID, connectionType]
-    public static void main(String args[]) throws IOException
+    public static void main(String[] args) throws IOException
     {
         String clientID = args[0];
         String connectionType = args[1];
